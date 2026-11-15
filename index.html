@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Мадды таджвида</title>
+<meta name="description" content="Блок-схема маддов таджвида: основные и производные, причины удлинения, счёт и примеры из Корана.">
+<meta name="theme-color" content="#0f2420">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky bar with filters -> root -> two pillars (Производные | Основные); Производные forks into Сукун | Хамза; leaves are tap-to-open cards on a rail. On phones the pillars stack, Основные first. */
+:root{
+  --bg:#eef3f1; --surface:#ffffff; --ink:#0f2420; --muted:#4f645e; --line:#aebfb9; --soft:#e2ebe8;
+  --root:#0f2420; --root-ink:#eaf5f1;
+  --base:#0b7a6e; --base-bg:#dff1ed;
+  --sukun:#5b3fb5; --sukun-bg:#ece8f9;
+  --hamza:#a8540a; --hamza-bg:#fbeadb;
+  --gold:#b8892b; --bar:rgba(238,243,241,.92);
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-ar:"Amiri","Geeza Pro","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1513; --surface:#12231f; --ink:#e4f0ec; --muted:#9db3ac; --line:#34524a; --soft:#173029;
+  --root:#e4f0ec; --root-ink:#0a1513;
+  --base:#4fd1bf; --base-bg:#10332e;
+  --sukun:#b9a6ff; --sukun-bg:#241e45;
+  --hamza:#f2a766; --hamza-bg:#3b2512;
+  --gold:#e0b45a; --bar:rgba(10,21,19,.92); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1513; --surface:#12231f; --ink:#e4f0ec; --muted:#9db3ac; --line:#34524a; --soft:#173029;
+  --root:#e4f0ec; --root-ink:#0a1513;
+  --base:#4fd1bf; --base-bg:#10332e;
+  --sukun:#b9a6ff; --sukun-bg:#241e45;
+  --hamza:#f2a766; --hamza-bg:#3b2512;
+  --gold:#e0b45a; --bar:rgba(10,21,19,.92); color-scheme:dark}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+section{scroll-margin-top:120px}
+
+/* sticky bar */
+.topbar{position:sticky;top:0;z-index:20;background:var(--bar);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.bar-row{display:flex;align-items:center;gap:10px;padding-block:8px 0}
+.brand{display:flex;align-items:baseline;gap:8px;font-weight:700;font-size:17px;letter-spacing:-.01em;margin-right:auto}
+.brand .ar{font-size:22px;color:var(--gold);font-weight:400}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:18px;line-height:1}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-block:8px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:40px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:500;font-size:14px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.chip i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.toggle{margin-left:auto;border-style:dashed}
+
+/* hero */
+.hero{padding-block:26px 22px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 32px}
+.hero h1{margin:0;font-size:clamp(30px,6vw,46px);line-height:1.05;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
+.hero p{margin:8px 0 0;max-width:56ch;color:var(--muted)}
+.hint{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+/* root */
+.root{display:flex;flex-direction:column;align-items:center}
+.root-node{background:var(--root);color:var(--root-ink);border-radius:14px;padding:10px 32px;text-align:center}
+.root-node b{display:block;font-size:20px}
+.root-node .ar{font-size:30px;line-height:1.2;display:block}
+.root-node small{font-size:12px;opacity:.75;letter-spacing:.04em}
+.fork{display:block;width:100%;height:44px}
+.fork path{fill:none;stroke:var(--line);stroke-width:2;vector-effect:non-scaling-stroke}
+.stem{width:2px;height:22px;background:var(--line);margin:0 auto}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:1.95fr 1fr;gap:28px}
+.pillar{min-width:0}
+.pillar-head{border-radius:14px;padding:14px 18px;border:2px solid currentColor}
+.pillar-head .t{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.pillar-head h2{margin:0;font-size:22px;letter-spacing:-.01em;color:var(--ink)}
+.pillar-head .ar{font-size:26px;line-height:1.2;color:var(--ink)}
+.pillar-head p{margin:2px 0 0;font-size:13.5px;opacity:.9}
+.derived .pillar-head{color:var(--gold);background:var(--surface)}
+.basic .pillar-head{color:var(--base);background:var(--base-bg)}
+.fork2{height:34px}
+.sub{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.group{min-width:0}
+.group-head{border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:600}
+.group-head small{display:block;font-weight:400;font-size:12.5px;opacity:.85}
+.group-head>div{color:var(--ink)}
+.g-sukun .group-head{background:var(--sukun-bg);color:var(--sukun)}
+.g-hamza .group-head{background:var(--hamza-bg);color:var(--hamza)}
+.group-head .sym{font-family:var(--f-ar);font-size:34px;line-height:1;flex:none}
+.g-sukun{--c:var(--sukun)} .g-hamza{--c:var(--hamza)} .basic{--c:var(--base)}
+
+/* leaves */
+.leaves{list-style:none;margin:0;padding:14px 0 0 18px;display:flex;flex-direction:column;gap:10px;position:relative}
+.leaves::before{content:"";position:absolute;left:5px;top:0;bottom:22px;width:2px;background:var(--line)}
+.leaf{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0;scroll-margin-top:130px;transition:border-color .2s,box-shadow .2s}
+.leaf::before{content:"";position:absolute;left:-13px;top:28px;width:13px;height:2px;background:var(--line)}
+.leaf::after{content:"";position:absolute;left:-17px;top:24px;width:10px;height:10px;border-radius:50%;background:var(--c);border:2px solid var(--bg)}
+.leaf.flash{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 30%,transparent)}
+.leaf[open]{border-color:var(--c)}
+summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto 22px;align-items:center;gap:10px;padding:12px 14px;min-height:60px;cursor:pointer;border-radius:14px}
+summary::-webkit-details-marker{display:none}
+summary h3{margin:0;font-size:17px;line-height:1.2;letter-spacing:-.005em}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:4px}
+.cnt{font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:999px;padding:1px 9px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{font-size:12.5px;color:var(--muted)}
+.name-ar{font-size:27px;line-height:1.1;color:var(--c)}
+.chev{width:22px;height:22px;position:relative;transition:transform .2s}
+.chev::before{content:"";position:absolute;left:6px;top:5px;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg)}
+.leaf[open] .chev{transform:rotate(180deg)}
+.body{padding:0 14px 14px;border-top:1px dashed var(--line);margin:0 14px;padding:12px 0 0}
+.leaf .body p{margin:0;font-size:14.5px}
+.meter{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.ticks{display:flex;gap:4px}
+.ticks b{width:24px;height:22px;border-radius:5px;background:var(--soft);font-size:11px;font-weight:600;color:var(--muted);display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.ticks b.on{background:var(--c);color:var(--surface)}
+.meter span{font-size:12.5px;color:var(--muted)}
+.ex{margin:12px 0 14px;background:var(--soft);border-radius:10px;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;color:var(--muted)}
+.ex .ar{font-size:28px;line-height:1.4;color:var(--ink)}
+.ex .ar mark{background:none;color:var(--c);font-weight:700}
+.body{padding-bottom:0}
+
+/* filtering */
+body[data-f="basic"] .derived,
+body[data-f="sukun"] .basic, body[data-f="sukun"] .g-hamza,
+body[data-f="hamza"] .basic, body[data-f="hamza"] .g-sukun{display:none}
+body[data-f="basic"] .pillars,body[data-f="sukun"] .pillars,body[data-f="hamza"] .pillars{grid-template-columns:1fr}
+body[data-f="sukun"] .sub,body[data-f="hamza"] .sub{grid-template-columns:1fr}
+body[data-f="basic"] .fork,body[data-f="sukun"] .fork,body[data-f="hamza"] .fork,
+body[data-f="sukun"] .fork2,body[data-f="hamza"] .fork2{display:none}
+@media (min-width:901px){body[data-f="basic"] .pillars,body[data-f="sukun"] .pillars,body[data-f="hamza"] .pillars{max-width:640px;margin:0 auto}}
+
+/* finder */
+.finder{margin-top:48px}
+.finder h2,.notes h2{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+.finder>p{margin:0 0 16px;color:var(--muted);max-width:60ch}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;max-width:640px}
+.fprog{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);margin-bottom:10px;min-height:32px}
+.fq{font-size:19px;font-weight:600;line-height:1.3;margin:0 0 14px;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;min-height:52px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.opt:active{background:var(--soft)}
+.opt small{display:block;color:var(--muted);font-size:12.5px}
+.opt::after{content:"›";font-size:22px;color:var(--muted);line-height:1}
+.link-btn{background:none;border:0;color:var(--base);font-weight:600;padding:8px 4px;min-height:40px}
+.res{display:flex;flex-direction:column;gap:12px}
+.res-head{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--c)}
+.res-head h3{margin:0;font-size:26px;color:var(--ink)}
+.res-head .ar{font-size:36px;line-height:1.1}
+.res p{margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+
+/* notes */
+.notes{margin-top:48px;display:grid;grid-template-columns:1.3fr 1fr;gap:28px;padding-bottom:40px}
+.notes>div{min-width:0}
+.notes ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.notes li{margin:6px 0}
+.notes a{color:var(--base)}
+.src{font-size:13px}
+footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
+
+/* bottom nav (phones) */
+.tabbar{display:none}
+
+@media (max-width:900px){
+  .pillars{grid-template-columns:1fr;gap:32px}
+  .basic{order:-1}
+  .fork,.fork2{display:none}
+  .sub{grid-template-columns:1fr;gap:28px}
+  .notes{grid-template-columns:1fr}
+  .stem{display:none}
+  .root .stem.top{display:block}
+  .hero{padding-block:20px 16px}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--bar);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  .tabbar a{min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;border-radius:12px}
+  .tabbar a span{font-size:20px;line-height:1}
+  .tabbar a.on{color:var(--ink);background:var(--soft)}
+}
+@media (min-width:901px){.root .stem.top{display:none}.hint-m{display:none}}
+@media (max-width:420px){
+  .name-ar{font-size:24px}
+  .ticks b{width:22px}
+  .fq{font-size:18px}
+  .root-node{padding:8px 24px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body data-f="all">
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="bar-row">
+      <div class="brand">Мадды <span class="ar">المدود</span></div>
+      <button class="icon-btn" id="theme" type="button" aria-label="Сменить тему">◐</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Фильтр схемы">
+      <button class="chip" type="button" data-f="all" aria-pressed="true">Все</button>
+      <button class="chip" type="button" data-f="basic" aria-pressed="false"><i style="background:var(--base)"></i>Основные</button>
+      <button class="chip" type="button" data-f="sukun" aria-pressed="false"><i style="background:var(--sukun)"></i>Сукун</button>
+      <button class="chip" type="button" data-f="hamza" aria-pressed="false"><i style="background:var(--hamza)"></i>Хамза</button>
+      <button class="chip toggle" type="button" id="toggleAll" aria-pressed="false">Развернуть всё</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Мадды таджвида</h1>
+      <p>Схема удлинений в чтении Корана: что основное, что производное и от чего зависит длина. Счёт по риваяту Хафса от Асима.</p>
+    </div>
+    <div class="hint"><span class="hint-m">Нажмите на карточку,</span><span class="hint-m">чтобы раскрыть правило и пример</span></div>
+  </div>
+
+  <section id="scheme" aria-label="Схема маддов">
+    <div class="root">
+      <div class="root-node"><span class="ar">المدود</span><b>Мадды</b><small>удлинение букв ا و ي</small></div>
+      <div class="stem top"></div>
+      <svg class="fork" viewBox="0 0 100 44" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0 V16 H33 V44 M50 16 H83 V44"/></svg>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar derived">
+        <div class="pillar-head">
+          <div class="t"><h2>Производные</h2><span class="ar">المد الفرعي</span></div>
+          <p>Длиннее двух счётов. Причина удлинения: хамза или сукун после буквы мадда.</p>
+        </div>
+        <svg class="fork fork2" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0 V12 H24 V34 M50 12 H76 V34"/></svg>
+        <div class="sub" id="sub"></div>
+      </div>
+
+      <div class="pillar basic">
+        <div class="pillar-head">
+          <div class="t"><h2>Основные</h2><span class="ar">المد الأصلي</span></div>
+          <p>Ровно 2 счёта. Это основа, от которой образуются остальные.</p>
+        </div>
+        <div id="basic"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="finder" id="finder" aria-label="Определитель мадда">
+    <h2>Определить мадд</h2>
+    <p>Выберите, что вы видите рядом с буквой мадда. Определитель назовёт вид и покажет его на схеме.</p>
+    <div class="fbox" id="fbox"></div>
+  </section>
+
+  <section class="notes" id="notes">
+    <div>
+      <h2>Что запомнить</h2>
+      <ul>
+        <li>Счёт (харака) — время одного движения пальца или произнесения одной краткой огласовки.</li>
+        <li>Лязим самый длинный, всегда 6 счётов. Он бывает словесным (кальми) и буквенным (харфи), каждый утяжелённым (мусаккаль) или лёгким (мухаффаф).</li>
+        <li>Муттасиль обязателен (ваджиб), мунфасиль допустим (джаиз). Длина обоих 4–5 в риваяте Хафса через аш-Шатибию.</li>
+        <li>Арид и лин при остановке читаются на 2, 4 или 6 счётов. Выбранную длину держите одинаковой.</li>
+        <li>У разных риватов и школ числа различаются. Точную длину сверяйте с учителем.</li>
+      </ul>
+    </div>
+    <div class="src">
+      <h2>Источники</h2>
+      <ul>
+        <li><a href="https://hidayahnetwork.com/what-is-madd-and-its-types-in-tajweed" target="_blank" rel="noopener">Hidayah Network: what is madd and its types</a></li>
+        <li><a href="https://almuhammadiacademy.com/types-of-madd/" target="_blank" rel="noopener">Al Muhammadi Academy: types of madd</a></li>
+        <li><a href="https://sabilalquran.com/types-of-madd-in-tajweed" target="_blank" rel="noopener">Sabil al-Quran: types of madd</a></li>
+        <li><a href="https://surahquran.com/Tajweed/mad-monfasel-en.html" target="_blank" rel="noopener">SurahQuran: madd munfasil</a></li>
+        <li><a href="https://iqranetwork.com/blog/ahkaam-al-madd/" target="_blank" rel="noopener">Iqra Network: ahkaam al-madd</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<nav class="tabbar" id="tabbar" aria-label="Разделы">
+  <a href="#scheme" class="on" data-s="scheme"><span>◈</span>Схема</a>
+  <a href="#finder" data-s="finder"><span>⌕</span>Определить</a>
+  <a href="#notes" data-s="notes"><span>✎</span>Памятка</a>
+</nav>
+
+<script>
+var SUKUN=[
+ {id:"arid",n:"Арид",a:"عارض للسكون",t:"временный сукун",r:"Сукун появляется только при остановке (вакф) на слове.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",e:"نَسْتَعِ<mark>ي</mark>نُ",x:"аль-Фатиха 1:5",g:"s"},
+ {id:"lyazim",n:"Лязим",a:"لازم",t:"постоянный сукун",r:"Сукун или шадда стоит в слове всегда: и при слитном чтении, и при остановке.",on:[6],l:"6 счётов",s:"6",e:"الضَّ<mark>ا</mark>لِّينَ",x:"аль-Фатиха 1:7",g:"s"},
+ {id:"lin",n:"Лин",a:"لين",t:"мягкий",r:"Вав или йа с сукуном после буквы с фатхой. Удлиняется, когда на слове останавливаются.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",e:"خَ<mark>وْ</mark>فٍ",x:"Курайш 106:4",g:"s"}
+];
+var HAMZA=[
+ {id:"muttasil",n:"Муттасиль",a:"متصل",t:"соединённый · ваджиб",r:"Буква мадда и хамза после неё стоят в одном слове.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"جَ<mark>ا</mark>ءَ",x:"ан-Наср 110:1",g:"h"},
+ {id:"munfasil",n:"Мунфасиль",a:"منفصل",t:"разделённый · джаиз",r:"Мадд заканчивает слово, а следующее слово начинается с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"يَ<mark>ا</mark> أَيُّهَا",x:"аль-Кафирун 109:1",g:"h"},
+ {id:"silya-kubra",n:"Сыля кубра",a:"صلة كبرى",t:"большая связка",r:"ه местоимения «он» между двумя огласованными буквами, а дальше начинается слово с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"مَالَ<mark>هُو</mark> أَخْلَدَهُ",x:"аль-Хумаза 104:3",g:"h"}
+];
+var BASIC=[
+ {id:"tabii",n:"Табии",a:"طبيعي",t:"естественный",r:"Буква мадда без хамзы и сукуна рядом. Основа всех остальных маддов.",on:[2],l:"2 счёта",s:"2",e:"قَ<mark>ا</mark>لَ",x:"аль-Бакара 2:30",g:"b"},
+ {id:"badal",n:"Бадаль",a:"بدل",t:"замена",r:"Хамза стоит перед буквой мадда: вместо второй хамзы пришла буква мадда.",on:[2],l:"2 счёта",s:"2",e:"<mark>آ</mark>مَنُوا",x:"аль-Бакара 2:62",g:"b"},
+ {id:"iwad",n:"Ивад",a:"عوض",t:"возмещение",r:"При остановке на танвине фатха он заменяется алифом, который тянется.",on:[2],l:"2 счёта",s:"2",e:"حَكِيم<mark>ا</mark>",x:"ан-Ниса 4:11",g:"b"},
+ {id:"silya-sugra",n:"Сыля сугра",a:"صلة صغرى",t:"малая связка",r:"ه местоимения «он» между двумя огласованными буквами, после которых нет хамзы.",on:[2],l:"2 счёта",s:"2",e:"لَ<mark>هُو</mark> مَا",x:"аль-Бакара 2:255",g:"b"}
+];
+var ALL={};[].concat(SUKUN,HAMZA,BASIC).forEach(function(o){ALL[o.id]=o});
+
+function leaf(o,open){
+  var ticks="";for(var i=1;i<=6;i++)ticks+='<b class="'+(o.on.indexOf(i)>-1?"on":"")+'">'+i+'</b>';
+  return '<li class="leaf-li"><details class="leaf" id="c-'+o.id+'"'+(open?" open":"")+'><summary>'+
+   '<span><h3>'+o.n+'</h3><span class="meta"><span class="cnt">'+o.s+' счёта</span><span class="tag">'+o.t+'</span></span></span>'+
+   '<span class="name-ar ar">'+o.a+'</span><span class="chev" aria-hidden="true"></span></summary>'+
+   '<div class="body"><p>'+o.r+'</p><div class="meter"><div class="ticks" role="img" aria-label="'+o.l+'">'+ticks+'</div><span>'+o.l+'</span></div>'+
+   '<div class="ex"><span>'+o.x+'</span><span class="ar">'+o.e+'</span></div></div></details></li>';
+}
+function group(cls,sym,title,sub,list){
+  return '<div class="group '+cls+'"><div class="group-head"><div>'+title+'<small>'+sub+'</small></div><span class="sym">'+sym+'</span></div><ul class="leaves">'+list.map(function(o){return leaf(o)}).join("")+'</ul></div>';
+}
+document.getElementById("sub").innerHTML=
+  group("g-sukun","ْ","Причина: сукун","после буквы мадда",SUKUN)+
+  group("g-hamza","ء","Причина: хамза","рядом с буквой мадда",HAMZA);
+document.getElementById("basic").innerHTML='<ul class="leaves">'+BASIC.map(function(o){return leaf(o)}).join("")+'</ul>';
+// fix: leaves are <ul> items; give li the leaf look
+(function(){var s=document.createElement("style");s.textContent=".leaf-li{list-style:none;position:relative}";document.head.appendChild(s)})();
+
+var details=function(){return [].slice.call(document.querySelectorAll("details.leaf"))};
+// desktop opens everything so the page is complete at rest
+if(window.matchMedia("(min-width:901px)").matches){details().forEach(function(d){d.open=true})}
+
+/* filters */
+var chips=[].slice.call(document.querySelectorAll(".chip[data-f]"));
+function setFilter(f){
+  document.body.setAttribute("data-f",f);
+  chips.forEach(function(c){c.setAttribute("aria-pressed",String(c.dataset.f===f))});
+}
+chips.forEach(function(c){c.addEventListener("click",function(){setFilter(c.dataset.f)})});
+
+var tAll=document.getElementById("toggleAll");
+function syncToggle(){
+  var all=details().every(function(d){return d.open});
+  tAll.setAttribute("aria-pressed",String(all));
+  tAll.textContent=all?"Свернуть всё":"Развернуть всё";
+}
+tAll.addEventListener("click",function(){
+  var all=details().every(function(d){return d.open});
+  details().forEach(function(d){d.open=!all});syncToggle();
+});
+details().forEach(function(d){d.addEventListener("toggle",syncToggle)});
+syncToggle();
+
+/* theme */
+var root=document.documentElement;
+try{var th=localStorage.getItem("madd-theme");if(th)root.setAttribute("data-theme",th)}catch(e){}
+document.getElementById("theme").addEventListener("click",function(){
+  var cur=root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  var nx=cur==="dark"?"light":"dark";root.setAttribute("data-theme",nx);
+  try{localStorage.setItem("madd-theme",nx)}catch(e){}
+});
+
+/* finder */
+var TREE={
+ start:{q:"Что стоит сразу после буквы мадда (ا و ي)?",o:[
+  {t:"Хамза (ء)",n:"h"},{t:"Сукун или шадда",n:"s"},{t:"Ничего из этого",n:"n"}]},
+ h:{q:"Где находится хамза?",o:[
+  {t:"В том же слове",d:"Буква мадда и хамза рядом",r:"muttasil"},
+  {t:"В начале следующего слова",d:"Мадд стоит в конце слова",r:"munfasil"},
+  {t:"Между ними ه местоимения «он»",d:"Огласованная ه, за ней хамза",r:"silya-kubra"}]},
+ s:{q:"Какой это сукун?",o:[
+  {t:"Постоянный, есть в слове всегда",d:"Виден и при слитном чтении",r:"lyazim"},
+  {t:"Появляется только при остановке",d:"Последняя буква слова",r:"arid"},
+  {t:"Вав или йа с сукуном после фатхи",d:"Например خَوْف، بَيْت",r:"lin"}]},
+ n:{q:"Что ещё есть рядом?",o:[
+  {t:"Хамза стоит перед буквой мадда",d:"Например آمَنُوا",r:"badal"},
+  {t:"Остановка на танвине фатха",d:"При остановке он даёт алиф",r:"iwad"},
+  {t:"ه местоимения между огласованными",d:"После неё нет хамзы",r:"silya-sugra"},
+  {t:"Ничего из этого",d:"Обычная буква мадда",r:"tabii"}]}
+};
+var path=[];
+var fbox=document.getElementById("fbox");
+var GC={s:"var(--sukun)",h:"var(--hamza)",b:"var(--base)"};
+function renderFinder(){
+  var node=path.length?path[path.length-1]:"start";
+  var html="";
+  if(typeof node==="object"){
+    var o=ALL[node.r];
+    html='<div class="res" style="--c:'+GC[o.g]+'"><div class="res-head"><h3>'+o.n+'</h3><span class="ar">'+o.a+'</span></div>'+
+     '<div><span class="cnt" style="--c:'+GC[o.g]+'">'+o.l+'</span></div><p>'+o.r+'</p>'+
+     '<div class="ex" style="--c:'+GC[o.g]+'"><span>'+o.x+'</span><span class="ar">'+o.e+'</span></div>'+
+     '<div class="btns"><button class="btn" type="button" id="show">Показать на схеме</button><button class="btn ghost" type="button" id="again">Заново</button></div></div>';
+    fbox.innerHTML=html;
+    document.getElementById("again").onclick=function(){path=[];renderFinder()};
+    document.getElementById("show").onclick=function(){showCard(o.id)};
+    return;
+  }
+  var n=TREE[node];
+  html='<div class="fprog"><span>Шаг '+(path.length+1)+' из 2</span>'+(path.length?'<button class="link-btn" type="button" id="back">‹ Назад</button>':'')+'</div>'+
+   '<p class="fq">'+n.q+'</p><div class="opts">'+n.o.map(function(x,i){
+     return '<button class="opt" type="button" data-i="'+i+'"><span>'+x.t+(x.d?'<small>'+x.d+'</small>':'')+'</span></button>'}).join("")+'</div>';
+  fbox.innerHTML=html;
+  [].forEach.call(fbox.querySelectorAll(".opt"),function(b){b.onclick=function(){
+    var x=n.o[+b.dataset.i];path.push(x.r?{r:x.r}:x.n);renderFinder();
+  }});
+  var back=document.getElementById("back");if(back)back.onclick=function(){path.pop();renderFinder()};
+}
+renderFinder();
+
+function showCard(id){
+  setFilter("all");
+  var d=document.getElementById("c-"+id);if(!d)return;
+  d.open=true;
+  d.scrollIntoView({behavior:"smooth",block:"center"});
+  d.classList.add("flash");setTimeout(function(){d.classList.remove("flash")},1800);
+}
+
+/* bottom nav highlight */
+var links=[].slice.call(document.querySelectorAll("#tabbar a"));
+if("IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){links.forEach(function(a){a.classList.toggle("on",a.dataset.s===e.target.id)})}
+  })},{rootMargin:"-35% 0px -55% 0px"});
+  ["scheme","finder","notes"].forEach(function(id){io.observe(document.getElementById(id))});
+}
+</script>
+</body>
+</html>
