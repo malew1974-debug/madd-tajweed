@@ -120,9 +120,22 @@ summary h3{margin:0;font-size:17px;line-height:1.2;letter-spacing:-.005em}
 .ticks b{width:24px;height:22px;border-radius:5px;background:var(--soft);font-size:11px;font-weight:600;color:var(--muted);display:grid;place-items:center;font-variant-numeric:tabular-nums}
 .ticks b.on{background:var(--c);color:var(--surface)}
 .meter span{font-size:12.5px;color:var(--muted)}
-.ex{margin:12px 0 14px;background:var(--soft);border-radius:10px;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;color:var(--muted)}
-.ex .ar{font-size:28px;line-height:1.4;color:var(--ink)}
-.ex .ar mark{background:none;color:var(--c);font-weight:700}
+.exm{margin:12px 0 0;padding:12px 12px 10px;background:var(--soft);border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.exm:last-child{margin-bottom:14px}
+.exm-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ref{font-size:12.5px;color:var(--muted);font-weight:600}
+.exm-btns{display:flex;gap:8px;align-items:center}
+.speed{min-width:48px;height:36px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--c);color:var(--surface);font-size:16px;line-height:1;display:grid;place-items:center;padding:0}
+.play:active{transform:scale(.94)}
+.exm .ayah{font-size:clamp(25px,5.6vw,31px);line-height:2.1;text-align:right;color:var(--ink);margin:2px 0}
+.exm .ayah b.m,.why b.m{font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent);border-radius:6px;padding:0 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.exm p.tr{margin:0;font-size:13.5px;color:var(--muted)}
+.exm p.why{margin:0;font-size:13.5px;color:var(--ink)}
+.exm .bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.exm .bar i{display:block;height:100%;width:0;background:var(--c)}
+.exm .aerr{font-size:12.5px;color:var(--hamza)}
+.legend-m{font-size:13px;color:var(--muted)}
 .body{padding-bottom:0}
 
 /* filtering */
@@ -218,7 +231,7 @@ footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
       <h1>Мадды таджвида</h1>
       <p>Схема удлинений в чтении Корана: что основное, что производное и от чего зависит длина. Счёт по риваяту Хафса от Асима.</p>
     </div>
-    <div class="hint"><span class="hint-m">Нажмите на карточку,</span><span class="hint-m">чтобы раскрыть правило и пример</span></div>
+    <div class="hint"><span class="hint-m">Нажмите на карточку: правило, примеры и аудио</span></div>
   </div>
 
   <section id="scheme" aria-label="Схема маддов">
@@ -258,6 +271,7 @@ footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
     <div>
       <h2>Что запомнить</h2>
       <ul>
+        <li>Жирным в аятах выделен мадд. Нажмите ▶, чтобы послушать аят целиком, а кнопкой 1× замедлите чтение до 0,75× или 0,5×.</li>
         <li>Счёт (харака) — время одного движения пальца или произнесения одной краткой огласовки.</li>
         <li>Лязим самый длинный, всегда 6 счётов. Он бывает словесным (кальми) и буквенным (харфи), каждый утяжелённым (мусаккаль) или лёгким (мухаффаф).</li>
         <li>Муттасиль обязателен (ваджиб), мунфасиль допустим (джаиз). Длина обоих 4–5 в риваяте Хафса через аш-Шатибию.</li>
@@ -272,6 +286,8 @@ footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
         <li><a href="https://almuhammadiacademy.com/types-of-madd/" target="_blank" rel="noopener">Al Muhammadi Academy: types of madd</a></li>
         <li><a href="https://sabilalquran.com/types-of-madd-in-tajweed" target="_blank" rel="noopener">Sabil al-Quran: types of madd</a></li>
         <li><a href="https://surahquran.com/Tajweed/mad-monfasel-en.html" target="_blank" rel="noopener">SurahQuran: madd munfasil</a></li>
+        <li><a href="https://everyayah.com/" target="_blank" rel="noopener">EveryAyah: аудио аятов в чтении Мишари аль-Афаси</a></li>
+        <li><a href="https://alquran.cloud/api" target="_blank" rel="noopener">Al Quran Cloud: текст аятов и перевод смыслов Э. Кулиева</a></li>
         <li><a href="https://iqranetwork.com/blog/ahkaam-al-madd/" target="_blank" rel="noopener">Iqra Network: ahkaam al-madd</a></li>
       </ul>
     </div>
@@ -286,30 +302,42 @@ footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
 
 <script>
 var SUKUN=[
- {id:"arid",n:"Арид",a:"عارض للسكون",t:"временный сукун",r:"Сукун появляется только при остановке (вакф) на слове.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",e:"نَسْتَعِ<mark>ي</mark>نُ",x:"аль-Фатиха 1:5",g:"s"},
- {id:"lyazim",n:"Лязим",a:"لازم",t:"постоянный сукун",r:"Сукун или шадда стоит в слове всегда: и при слитном чтении, и при остановке.",on:[6],l:"6 счётов",s:"6",e:"الضَّ<mark>ا</mark>لِّينَ",x:"аль-Фатиха 1:7",g:"s"},
- {id:"lin",n:"Лин",a:"لين",t:"мягкий",r:"Вав или йа с сукуном после буквы с фатхой. Удлиняется, когда на слове останавливаются.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",e:"خَ<mark>وْ</mark>فٍ",x:"Курайш 106:4",g:"s"}
+ {id:"arid",n:"Арид",a:"عارض للسكون",t:"временный сукун",r:"Сукун появляется только при остановке (вакф) на слове.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",g:"s"},
+ {id:"lyazim",n:"Лязим",a:"لازم",t:"постоянный сукун",r:"Сукун или шадда стоит в слове всегда: и при слитном чтении, и при остановке.",on:[6],l:"6 счётов",s:"6",g:"s"},
+ {id:"lin",n:"Лин",a:"لين",t:"мягкий",r:"Вав или йа с сукуном после буквы с фатхой. Удлиняется, когда на слове останавливаются.",on:[2,4,6],l:"2, 4 или 6",s:"2·4·6",g:"s"}
 ];
 var HAMZA=[
- {id:"muttasil",n:"Муттасиль",a:"متصل",t:"соединённый · ваджиб",r:"Буква мадда и хамза после неё стоят в одном слове.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"جَ<mark>ا</mark>ءَ",x:"ан-Наср 110:1",g:"h"},
- {id:"munfasil",n:"Мунфасиль",a:"منفصل",t:"разделённый · джаиз",r:"Мадд заканчивает слово, а следующее слово начинается с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"يَ<mark>ا</mark> أَيُّهَا",x:"аль-Кафирун 109:1",g:"h"},
- {id:"silya-kubra",n:"Сыля кубра",a:"صلة كبرى",t:"большая связка",r:"ه местоимения «он» между двумя огласованными буквами, а дальше начинается слово с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",e:"مَالَ<mark>هُو</mark> أَخْلَدَهُ",x:"аль-Хумаза 104:3",g:"h"}
+ {id:"muttasil",n:"Муттасиль",a:"متصل",t:"соединённый · ваджиб",r:"Буква мадда и хамза после неё стоят в одном слове.",on:[4,5],l:"4–5 счётов",s:"4–5",g:"h"},
+ {id:"munfasil",n:"Мунфасиль",a:"منفصل",t:"разделённый · джаиз",r:"Мадд заканчивает слово, а следующее слово начинается с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",g:"h"},
+ {id:"silya-kubra",n:"Сыля кубра",a:"صلة كبرى",t:"большая связка",r:"ه местоимения «он» между двумя огласованными буквами, а дальше начинается слово с хамзы.",on:[4,5],l:"4–5 счётов",s:"4–5",g:"h"}
 ];
 var BASIC=[
- {id:"tabii",n:"Табии",a:"طبيعي",t:"естественный",r:"Буква мадда без хамзы и сукуна рядом. Основа всех остальных маддов.",on:[2],l:"2 счёта",s:"2",e:"قَ<mark>ا</mark>لَ",x:"аль-Бакара 2:30",g:"b"},
- {id:"badal",n:"Бадаль",a:"بدل",t:"замена",r:"Хамза стоит перед буквой мадда: вместо второй хамзы пришла буква мадда.",on:[2],l:"2 счёта",s:"2",e:"<mark>آ</mark>مَنُوا",x:"аль-Бакара 2:62",g:"b"},
- {id:"iwad",n:"Ивад",a:"عوض",t:"возмещение",r:"При остановке на танвине фатха он заменяется алифом, который тянется.",on:[2],l:"2 счёта",s:"2",e:"حَكِيم<mark>ا</mark>",x:"ан-Ниса 4:11",g:"b"},
- {id:"silya-sugra",n:"Сыля сугра",a:"صلة صغرى",t:"малая связка",r:"ه местоимения «он» между двумя огласованными буквами, после которых нет хамзы.",on:[2],l:"2 счёта",s:"2",e:"لَ<mark>هُو</mark> مَا",x:"аль-Бакара 2:255",g:"b"}
+ {id:"tabii",n:"Табии",a:"طبيعي",t:"естественный",r:"Буква мадда без хамзы и сукуна рядом. Основа всех остальных маддов.",on:[2],l:"2 счёта",s:"2",g:"b"},
+ {id:"badal",n:"Бадаль",a:"بدل",t:"замена",r:"Хамза стоит перед буквой мадда: вместо второй хамзы пришла буква мадда.",on:[2],l:"2 счёта",s:"2",g:"b"},
+ {id:"iwad",n:"Ивад",a:"عوض",t:"возмещение",r:"При остановке на танвине фатха он заменяется алифом, который тянется.",on:[2],l:"2 счёта",s:"2",g:"b"},
+ {id:"silya-sugra",n:"Сыля сугра",a:"صلة صغرى",t:"малая связка",r:"ه местоимения «он» между двумя огласованными буквами, после которых нет хамзы.",on:[2],l:"2 счёта",s:"2",g:"b"}
 ];
 var ALL={};[].concat(SUKUN,HAMZA,BASIC).forEach(function(o){ALL[o.id]=o});
 
+var SURA={"1": "Аль-Фатиха", "2": "Аль-Бакара", "69": "Аль-Хакка", "71": "Нух", "76": "Аль-Инсан", "88": "Аль-Гашия", "90": "Аль-Балад", "92": "Аль-Лейль", "97": "Аль-Кадр", "101": "Аль-Кариа", "102": "Ат-Такасур", "103": "Аль-Аср", "104": "Аль-Хумаза", "105": "Аль-Филь", "106": "Курайш", "107": "Аль-Маун", "108": "Аль-Каусар", "109": "Аль-Кафирун", "110": "Ан-Наср", "111": "Аль-Масад", "114": "Ан-Нас"};
+var EX={"tabii": [{"s": 114, "a": 1, "ar": "قُلْ أَعُوذُ بِرَبِّ ٱل<b class=\"m\">نَّا</b>سِ", "ru": "Скажи: «Прибегаю к защите Господа людей,", "why": "После ن с фатхой стоит алиф, дальше нет ни хамзы, ни сукуна. Читаем ровно 2 счёта."}, {"s": 1, "a": 6, "ar": "ٱهْدِنَا ٱلصِّ<b class=\"m\">رَٰ</b>طَ ٱلْمُسْتَقِيمَ", "ru": "Веди нас прямым путем,", "why": "Малый (кинжальный) алиф над ر даёт мадд. Следом идёт ط с огласовкой, без хамзы и сукуна, поэтому это табии: 2 счёта."}, {"s": 102, "a": 3, "ar": "كَ<b class=\"m\">لَّا</b> سَوْفَ تَعْلَمُونَ", "ru": "Но нет! Скоро вы узнаете!", "why": "Алиф стоит на конце слова после ل с фатхой, а следующее слово начинается с س, не с хамзы. 2 счёта."}], "badal": [{"s": 103, "a": 3, "ar": "إِلَّا ٱلَّذِينَ <b class=\"m\">ءَا</b>مَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ", "ru": "кроме тех, которые уверовали, совершали праведные деяния, заповедали друг другу истину и заповедали друг другу терпение!", "why": "В слове آمَنُوا хамза стоит перед алифом. Хамза идёт первой, поэтому это бадаль, а не муттасиль. 2 счёта."}, {"s": 106, "a": 4, "ar": "ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍۢ وَ<b class=\"m\">ءَا</b>مَنَهُم مِّنْ خَوْفٍۭ", "ru": "Который накормил их после голода и избавил их от страха.", "why": "Слово وَآمَنَهُم: хамза и сразу за ней алиф мадда. Хамза перед буквой мадда, значит бадаль: 2 счёта."}, {"s": 106, "a": 1, "ar": "لِ<b class=\"m\">إِي</b>لَٰفِ قُرَيْشٍ", "ru": "Ради единения курейшитов,", "why": "Хамза с кясрой, а за ней ي мадда. Хамза предшествует букве мадда, это бадаль: 2 счёта."}], "iwad": [{"s": 110, "a": 3, "ar": "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ ۚ إِنَّهُۥ كَانَ تَوَّا<b class=\"m\">بًۢا</b>", "ru": "восславь же хвалой Господа своего и попроси у Него прощения. Воистину, Он - Принимающий покаяния.", "why": "Слово стоит в конце аята и оканчивается танвином фатха. При остановке танвин не читается как «ан», а заменяется алифом на 2 счёта."}, {"s": 71, "a": 10, "ar": "فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّا<b class=\"m\">رًۭا</b>", "ru": "Я говорил: «Просите у вашего Господа прощения, ведь Он - Всепрощающий.", "why": "Аят заканчивается словом с танвином фатха. На остановке он превращается в протяжный алиф: 2 счёта."}, {"s": 76, "a": 30, "ar": "وَمَا تَشَآءُونَ إِلَّآ أَن يَشَآءَ ٱللَّهُ ۚ إِنَّ ٱللَّهَ كَانَ عَلِيمًا حَكِي<b class=\"m\">مًۭا</b>", "ru": "Но вы не пожелаете этого, если не пожелает Аллах. Воистину, Аллах - Знающий, Мудрый.", "why": "Остановка на слове حَكِيمًا с танвином фатха. Танвин заменяется алифом, который тянется 2 счёта."}], "silya-sugra": [{"s": 90, "a": 8, "ar": "أَلَمْ نَجْعَل لَّ<b class=\"m\">هُۥ</b> عَيْنَيْنِ", "ru": "Разве Мы не наделили его двумя глазами,", "why": "ه местоимения «его» с даммой стоит между огласованными ل и ع. После неё нет хамзы, поэтому дамма тянется как «у» на 2 счёта."}, {"s": 111, "a": 2, "ar": "مَآ أَغْنَىٰ عَنْهُ مَالُ<b class=\"m\">هُۥ</b> وَمَا كَسَبَ", "ru": "Не спасло его богатство и то, что он приобрел.", "why": "В слове مَالُهُ وَمَا буква ه с даммой стоит после огласованной ل, а следом идёт و, не хамза. Тянем 2 счёта."}, {"s": 101, "a": 9, "ar": "فَأُمُّ<b class=\"m\">هُۥ</b> هَاوِيَةٌۭ", "ru": "матерью станет Пропасть.", "why": "В слове فَأُمُّهُ هَاوِيَةٌ ه с даммой стоит после огласованной م, а следом идёт другая ه. Хамзы нет: 2 счёта."}], "muttasil": [{"s": 110, "a": 1, "ar": "إِذَا <b class=\"m\">جَآ</b>ءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ", "ru": "Когда придет помощь Аллаха и настанет победа,", "why": "Алиф и хамза после него находятся в одном слове جَآءَ. Муттасиль обязателен: 4–5 счётов."}, {"s": 107, "a": 6, "ar": "ٱلَّذِينَ هُمْ يُ<b class=\"m\">رَآ</b>ءُونَ", "ru": "которые лицемерят", "why": "В слове يُرَآءُونَ за алифом сразу идёт хамза. Одно слово, значит муттасиль: 4–5 счётов."}, {"s": 88, "a": 18, "ar": "وَإِلَى ٱلسَّ<b class=\"m\">مَآ</b>ءِ كَيْفَ رُفِعَتْ", "ru": "как вознесено небо,", "why": "В слове ٱلسَّمَآءِ алиф и хамза стоят рядом без пробела. Это муттасиль: 4–5 счётов."}], "munfasil": [{"s": 97, "a": 1, "ar": "إِ<b class=\"m\">نَّآ</b> أَنزَلْنَٰهُ فِى لَيْلَةِ ٱلْقَدْرِ", "ru": "Воистину, Мы ниспослали его в ночь предопределения.", "why": "Слово إِنَّا заканчивается алифом, а следующее слово أَنزَلْنَاهُ начинается с хамзы. Мадд и хамза в разных словах: 4–5 счётов."}, {"s": 108, "a": 1, "ar": "إِ<b class=\"m\">نَّآ</b> أَعْطَيْنَٰكَ ٱلْكَوْثَرَ", "ru": "Мы даровали тебе аль-Каусар.", "why": "Алиф в конце إِنَّا, а за ним слово أَعْطَيْنَاكَ с хамзой. Разные слова, значит мунфасиль: 4–5 счётов."}, {"s": 109, "a": 1, "ar": "قُلْ <b class=\"m\">يَٰٓ</b>أَيُّهَا ٱلْكَٰفِرُونَ", "ru": "Скажи: «О неверующие!", "why": "Слово يَا заканчивается мадд-алифом, и сразу идёт أَيُّهَا, начинающееся с хамзы. Мунфасиль: 4–5 счётов."}], "silya-kubra": [{"s": 104, "a": 3, "ar": "يَحْسَبُ أَنَّ مَالَ<b class=\"m\">هُۥٓ</b> أَخْلَدَهُۥ", "ru": "думая, что богатство увековечит его.", "why": "В слове مَالَهُ буква ه с даммой стоит между огласованными, а следующее слово أَخْلَدَهُ начинается с хамзы. Тянем 4–5 счётов."}, {"s": 92, "a": 11, "ar": "وَمَا يُغْنِى عَنْهُ مَالُ<b class=\"m\">هُۥٓ</b> إِذَا تَرَدَّىٰٓ", "ru": "Не спасет его достояние, когда он падет.", "why": "ه в слове مَالُهُ находится между огласованными ل и ه, а дальше идёт إِذَا с хамзой. Сыля кубра: 4–5 счётов."}, {"s": 90, "a": 7, "ar": "أَيَحْسَبُ أَن لَّمْ يَرَ<b class=\"m\">هُۥٓ</b> أَحَدٌ", "ru": "Неужели он полагает, что никто не видел его?", "why": "ه в слове يَرَهُ с даммой, перед ней огласованная ر, а следом слово أَحَدٌ с хамзой. Сыля кубра: 4–5 счётов."}], "arid": [{"s": 1, "a": 4, "ar": "مَٰلِكِ يَوْمِ ٱل<b class=\"m\">دِّي</b>نِ", "ru": "Властелину Дня воздаяния!", "why": "Аят заканчивается словом ٱلدِّينِ. При остановке последняя ن получает временный сукун, а перед ней ي мадда. Читаем 2, 4 или 6 счётов."}, {"s": 1, "a": 2, "ar": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَ<b class=\"m\">مِي</b>نَ", "ru": "Хвала Аллаху, Господу миров,", "why": "На остановке на ٱلْعَالَمِينَ последняя ن становится сукунной. Перед ней ي мадда: 2, 4 или 6 счётов."}, {"s": 105, "a": 1, "ar": "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَٰبِ ٱلْ<b class=\"m\">فِي</b>لِ", "ru": "Разве ты не видел, что сделал твой Господь с владельцами слона?", "why": "Слово ٱلْفِيلِ заканчивает аят. На остановке ل получает сукун, а перед ней ي мадда. 2, 4 или 6 счётов."}], "lyazim": [{"s": 1, "a": 7, "ar": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱل<b class=\"m\">ضَّآ</b>لِّينَ", "ru": "путем тех, кого Ты облагодетельствовал, не тех, на кого пал гнев, и не заблудших.", "why": "После алифа стоит ل с шаддой, то есть лям с сукуном и ещё одной ль. Сукун постоянный, это кальми мусаккаль: 6 счётов."}, {"s": 69, "a": 1, "ar": "ٱلْ<b class=\"m\">حَآ</b>قَّةُ", "ru": "Неминуемое!", "why": "После алифа идёт ق с шаддой. Сукун внутри шадды есть всегда, и при остановке тоже. Лязим кальми мусаккаль: 6 счётов."}, {"s": 2, "a": 1, "ar": "ا<b class=\"m\">لٓ</b><b class=\"m\">مٓ</b>", "ru": "Алиф. Лам. Мим.", "why": "Буквы читаются по названиям: لَامْ и مِيمْ. Между мадд-буквой и сукуном стоит звук названия. Лязим харфи мухаффаф: 6 счётов."}], "lin": [{"s": 106, "a": 4, "ar": "ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍۢ وَءَامَنَهُم مِّنْ <b class=\"m\">خَوْ</b>فٍۭ", "ru": "Который накормил их после голода и избавил их от страха.", "why": "Аят заканчивается словом خَوْفٍ. Перед ф стоит و с сукуном после фатхи. На остановке читаем лин: 2, 4 или 6 счётов."}, {"s": 106, "a": 2, "ar": "إِۦلَٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱل<b class=\"m\">صَّيْ</b>فِ", "ru": "единения их во время зимних и летних поездок.", "why": "Слово ٱلصَّيْفِ заканчивает аят. ي с сукуном стоит после фатхи, на остановке тянем лин: 2, 4 или 6."}, {"s": 106, "a": 3, "ar": "فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْ<b class=\"m\">بَيْ</b>تِ", "ru": "Пусть же они поклоняются Господу этого Дома,", "why": "Слово ٱلْبَيْتِ в конце аята. ي с сукуном после фатхи даёт лин: 2, 4 или 6 счётов."}]};
+function exList(o){
+  return (EX[o.id]||[]).map(function(e){
+    return '<figure class="exm" style="margin:12px 0 0"><div class="exm-top"><span class="ref">'+SURA[e.s]+' · '+e.s+':'+e.a+'</span>'+
+     '<span class="exm-btns"><button class="speed" type="button" aria-label="Скорость">'+rateLabel()+'</button>'+
+     '<button class="play" type="button" data-s="'+e.s+'" data-a="'+e.a+'" aria-label="Слушать аят '+e.s+':'+e.a+'">▶</button></span></div>'+
+     '<div class="ayah ar" lang="ar">'+e.ar+'</div><p class="tr">'+e.ru+'</p>'+
+     '<p class="why"><b>Почему:</b> '+e.why+'</p><div class="bar"><i></i></div></figure>';
+  }).join("");
+}
+function rateLabel(){return (window.__rate||1)+"×"}
 function leaf(o,open){
   var ticks="";for(var i=1;i<=6;i++)ticks+='<b class="'+(o.on.indexOf(i)>-1?"on":"")+'">'+i+'</b>';
   return '<li class="leaf-li"><details class="leaf" id="c-'+o.id+'"'+(open?" open":"")+'><summary>'+
    '<span><h3>'+o.n+'</h3><span class="meta"><span class="cnt">'+o.s+' счёта</span><span class="tag">'+o.t+'</span></span></span>'+
    '<span class="name-ar ar">'+o.a+'</span><span class="chev" aria-hidden="true"></span></summary>'+
    '<div class="body"><p>'+o.r+'</p><div class="meter"><div class="ticks" role="img" aria-label="'+o.l+'">'+ticks+'</div><span>'+o.l+'</span></div>'+
-   '<div class="ex"><span>'+o.x+'</span><span class="ar">'+o.e+'</span></div></div></details></li>';
+   '<p class="legend-m" style="margin-top:10px">Примеры из Корана. Жирным выделен мадд.</p>'+exList(o)+'</div></details></li>';
 }
 function group(cls,sym,title,sub,list){
   return '<div class="group '+cls+'"><div class="group-head"><div>'+title+'<small>'+sub+'</small></div><span class="sym">'+sym+'</span></div><ul class="leaves">'+list.map(function(o){return leaf(o)}).join("")+'</ul></div>';
@@ -383,7 +411,7 @@ function renderFinder(){
     var o=ALL[node.r];
     html='<div class="res" style="--c:'+GC[o.g]+'"><div class="res-head"><h3>'+o.n+'</h3><span class="ar">'+o.a+'</span></div>'+
      '<div><span class="cnt" style="--c:'+GC[o.g]+'">'+o.l+'</span></div><p>'+o.r+'</p>'+
-     '<div class="ex" style="--c:'+GC[o.g]+'"><span>'+o.x+'</span><span class="ar">'+o.e+'</span></div>'+
+     exList(o)+
      '<div class="btns"><button class="btn" type="button" id="show">Показать на схеме</button><button class="btn ghost" type="button" id="again">Заново</button></div></div>';
     fbox.innerHTML=html;
     document.getElementById("again").onclick=function(){path=[];renderFinder()};
@@ -409,6 +437,45 @@ function showCard(id){
   d.scrollIntoView({behavior:"smooth",block:"center"});
   d.classList.add("flash");setTimeout(function(){d.classList.remove("flash")},1800);
 }
+
+/* audio */
+var player=new Audio();player.preload="none";
+window.__rate=1;var cur=null;
+function aurl(sn,an){function p(n){return ("000"+n).slice(-3)}return "https://everyayah.com/data/Alafasy_128kbps/"+p(sn)+p(an)+".mp3"}
+function stopCur(){
+  if(cur){cur.classList.remove("playing");var b=cur.querySelector(".play");if(b)b.textContent="▶";
+    var i=cur.querySelector(".bar i");if(i)i.style.width="0";var er=cur.querySelector(".aerr");if(er)er.remove()}
+  cur=null;
+}
+function applyRate(){player.defaultPlaybackRate=window.__rate;player.playbackRate=window.__rate;
+  [].forEach.call(document.querySelectorAll(".speed"),function(x){x.textContent=rateLabel()})}
+document.addEventListener("click",function(ev){
+  var sp=ev.target.closest(".speed");
+  if(sp){var r=window.__rate;window.__rate=r===1?0.75:(r===0.75?0.5:1);applyRate();return}
+  var b=ev.target.closest(".play");if(!b)return;
+  var fig=b.closest(".exm");
+  if(cur===fig&&!player.paused){player.pause();b.textContent="▶";fig.classList.remove("playing");return}
+  if(cur!==fig){
+    stopCur();player.pause();cur=fig;player.src=aurl(b.dataset.s,b.dataset.a);applyRate();
+  }
+  var er=fig.querySelector(".aerr");if(er)er.remove();
+  var pr=player.play();
+  b.textContent="❚❚";fig.classList.add("playing");
+  if(pr&&pr.catch)pr.catch(function(){
+    b.textContent="▶";fig.classList.remove("playing");
+    var m=document.createElement("span");m.className="aerr";m.textContent="Не удалось загрузить аудио. Проверьте интернет и повторите.";
+    fig.appendChild(m);
+  });
+});
+player.addEventListener("timeupdate",function(){
+  if(!cur||!player.duration)return;var i=cur.querySelector(".bar i");if(i)i.style.width=(player.currentTime/player.duration*100)+"%"});
+player.addEventListener("ended",stopCur);
+player.addEventListener("pause",function(){if(cur&&!player.ended){var b=cur.querySelector(".play");if(b)b.textContent="▶";cur.classList.remove("playing")}});
+player.addEventListener("play",function(){if(cur){var b=cur.querySelector(".play");if(b)b.textContent="❚❚";cur.classList.add("playing")}});
+player.addEventListener("error",function(){
+  if(!cur)return;var b=cur.querySelector(".play");if(b)b.textContent="▶";cur.classList.remove("playing");
+  if(!cur.querySelector(".aerr")){var m=document.createElement("span");m.className="aerr";m.textContent="Не удалось загрузить аудио. Проверьте интернет и повторите.";cur.appendChild(m)}
+});
 
 /* bottom nav highlight */
 var links=[].slice.call(document.querySelectorAll("#tabbar a"));
