@@ -290,7 +290,7 @@ footer{padding-block:0 28px;color:var(--muted);font-size:12.5px}
         <li><a href="https://almuhammadiacademy.com/types-of-madd/" target="_blank" rel="noopener">Al Muhammadi Academy: types of madd</a></li>
         <li><a href="https://sabilalquran.com/types-of-madd-in-tajweed" target="_blank" rel="noopener">Sabil al-Quran: types of madd</a></li>
         <li><a href="https://surahquran.com/Tajweed/mad-monfasel-en.html" target="_blank" rel="noopener">SurahQuran: madd munfasil</a></li>
-        <li><a href="https://everyayah.com/" target="_blank" rel="noopener">EveryAyah: аудио аятов в чтении Мишари аль-Афаси</a></li>
+        <li><a href="https://everyayah.com/" target="_blank" rel="noopener">EveryAyah: аудио аятов в учебном чтении (муаллим) Махмуда Халиля аль-Хусари</a></li>
         <li><a href="https://alquran.cloud/api" target="_blank" rel="noopener">Al Quran Cloud: текст аятов и перевод смыслов Э. Кулиева</a></li>
         <li><a href="https://iqranetwork.com/blog/ahkaam-al-madd/" target="_blank" rel="noopener">Iqra Network: ahkaam al-madd</a></li>
       </ul>
@@ -445,7 +445,7 @@ function showCard(id){
 /* audio */
 var player=new Audio();player.preload="none";
 window.__rate=1;var cur=null;
-function aurl(sn,an){function p(n){return ("000"+n).slice(-3)}return "https://everyayah.com/data/Alafasy_128kbps/"+p(sn)+p(an)+".mp3"}
+function aurl(sn,an){function p(n){return ("000"+n).slice(-3)}return "https://everyayah.com/data/Husary_Muallim_128kbps/"+p(sn)+p(an)+".mp3"}
 function stopCur(){
   if(cur){cur.classList.remove("playing");var b=cur.querySelector(".play");if(b)b.textContent="▶";
     var i=cur.querySelector(".bar i");if(i)i.style.width="0";var er=cur.querySelector(".aerr");if(er)er.remove()}
